@@ -1,17 +1,20 @@
 import pandas as pd
 from orbit.models.dlt import ETSFull
 
+
 class OrbitETS(ETSFull):
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, date_col, response_col, **kwargs):
+        super().__init__(date_col=date_col, response_col=response_col, **kwargs)
         self.name = 'OrbitETS'
 
-    def fit(self, date_col, value_col):
-        date_col = pd.to_numeric(date_col)
-        super(OrbitETS, self).fit(date_col + value_col)
+    def fit(self, train):
+        train[self.date_col] = pd.to_numeric(train[self.date_col])
+        super(OrbitETS, self).fit(df=train)
 
-    def predict(self, pred):
-        pred_df = super(OrbitETS, self).predict(pred)
-        df = pd.DataFrame(pred_df['time'] + pred_df['predicion'])
-        print(df.head())
+    def predict(self, test, **kwargs):
+        test[self.date_col] = pd.to_numeric(test[self.date_col])
+        prediction = super(OrbitETS, self).predict(test)
+        prediction[self.date_col] = pd.to_datetime(prediction[self.date_col])
+        prediction = prediction[['time', 'prediction']]
+        return prediction
