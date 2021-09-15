@@ -77,7 +77,13 @@ def pipeline(data, model, test_size=74):
         model.fit(train)
         prediction = model.predict(test)
 
-        metrics[ts.name] = mean_squared_error(prediction['prediction'], test['price'])
+        metrics[ts.name] = mean_squared_error(prediction['price'], test['price'])
+        fig, ax = plt.subplots(figsize=(12, 6))
+        ax.plot(test['time'], test['price'], c='b', label='Real')
+        ax.plot(test['time'], prediction['price'], c='r', label='Prediction')
+        ax.set_title('Metric is ' + str(metrics[ts.name]))
+        plt.legend()
+        plt.show()
 
     return metrics
 

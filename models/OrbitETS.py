@@ -22,5 +22,6 @@ class OrbitETS(ETSFull):
 
         prediction[self.date_col] = pd.to_datetime(prediction[self.date_col])
         prediction = prediction[['time', 'prediction']]
+        prediction.columns = ['time', 'price']
 
         return prediction
