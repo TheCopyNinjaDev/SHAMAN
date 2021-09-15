@@ -9,12 +9,18 @@ class OrbitETS(ETSFull):
         self.name = 'OrbitETS'
 
     def fit(self, train):
-        train[self.date_col] = pd.to_numeric(train[self.date_col])
-        super(OrbitETS, self).fit(df=train)
+        new_train = train.copy()
+        new_train[self.date_col] = pd.to_numeric(new_train[self.date_col])
+
+        super(OrbitETS, self).fit(df=new_train)
 
     def predict(self, test, **kwargs):
-        test[self.date_col] = pd.to_numeric(test[self.date_col])
-        prediction = super(OrbitETS, self).predict(test)
+        new_test = test.copy()
+        new_test[self.date_col] = pd.to_numeric(new_test[self.date_col])
+
+        prediction = super(OrbitETS, self).predict(new_test)
+
         prediction[self.date_col] = pd.to_datetime(prediction[self.date_col])
         prediction = prediction[['time', 'prediction']]
+
         return prediction
