@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
+from tqdm import tqdm
 
 
 def __calculate_income(series: pd.Series):
@@ -69,14 +70,14 @@ def pipeline(data, model, test_size=74):
     """
 
     metrics = {}
-    for ts in data:
+    for ts in tqdm(data):
         train = ts[:-test_size]
         test = ts[-test_size:]
 
         model.fit(train)
         prediction = model.predict(test)
 
-        metrics[model.name] = mean_squared_error(prediction['prediction'], test['price'])
+        metrics[ts.name] = mean_squared_error(prediction['prediction'], test['price'])
 
     return metrics
 
