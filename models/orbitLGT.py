@@ -5,7 +5,7 @@ plt.style.use('seaborn')
 from orbit.models.lgt import LGTFull
 
 
-class OrbitDLT(LGTFull):
+class OrbitLGT(LGTFull):
 
     def __init__(self, date_col, response_col, **kwargs):
         super().__init__(date_col=date_col, response_col=response_col, **kwargs)
