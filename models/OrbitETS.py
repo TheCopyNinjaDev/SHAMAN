@@ -29,6 +29,9 @@ class OrbitETS(ETSFull):
         prediction = prediction[['time', 'prediction']]
         prediction.columns = ['time', 'price']
 
+        self.__prediction = prediction
+        self.__test = test
+
         return prediction
 
     def show(self):
