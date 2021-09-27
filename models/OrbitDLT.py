@@ -2,14 +2,14 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 plt.style.use('seaborn')
-from orbit.models.dlt import ETSFull
+from orbit.models.dlt import DLTMAP
 
 
-class OrbitETS(ETSFull):
+class OrbitDLT(DLTMAP):
 
     def __init__(self, date_col, response_col, **kwargs):
         super().__init__(date_col=date_col, response_col=response_col, **kwargs)
-        self.name = 'OrbitETS'
+        self.name = 'OrbitDLT'
         self.__prediction = None
         self.__test = None
 
@@ -17,17 +17,20 @@ class OrbitETS(ETSFull):
         new_train = train.copy()
         new_train[self.date_col] = pd.to_numeric(new_train[self.date_col])
 
-        super(OrbitETS, self).fit(df=new_train)
+        super(OrbitDLT, self).fit(df=new_train)
 
     def predict(self, test, **kwargs):
         new_test = test.copy()
         new_test[self.date_col] = pd.to_numeric(new_test[self.date_col])
 
-        prediction = super(OrbitETS, self).predict(new_test)
+        prediction = super(OrbitDLT, self).predict(new_test)
 
         prediction[self.date_col] = pd.to_datetime(prediction[self.date_col])
         prediction = prediction[['time', 'prediction']]
         prediction.columns = ['time', 'price']
+
+        self.__prediction = prediction
+        self.__test = test
 
         return prediction
 
