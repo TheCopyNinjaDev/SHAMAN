@@ -34,7 +34,7 @@ async def get_minute_candles(ticker: str, start: datetime, end: datetime):
             price.append(d['c'])
         DATA['time'] = times
         DATA['price'] = price
-        df = pd.DataFrame(data=DATA, index=range(len(DATA['time'])))
+        df = pd.DataFrame(data=d, index=range(len(d['time'])))
         os.mkdir(f'data/{ticker}')
         df.to_csv(f"data/{ticker}/{str(start)[:10]} - {str(end)[:10]}.csv")
         times = []
