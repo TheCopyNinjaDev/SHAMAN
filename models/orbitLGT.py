@@ -2,14 +2,14 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 plt.style.use('seaborn')
-from orbit.models.dlt import ETSFull
+from orbit.models.lgt import LGTFull
 
 
-class OrbitETS(ETSFull):
+class OrbitLGT(LGTFull):
 
     def __init__(self, date_col, response_col, **kwargs):
         super().__init__(date_col=date_col, response_col=response_col, **kwargs)
-        self.name = 'OrbitETS'
+        self.name = 'LGTFull'
         self.__prediction = None
         self.__test = None
 
@@ -17,13 +17,13 @@ class OrbitETS(ETSFull):
         new_train = train.copy()
         new_train[self.date_col] = pd.to_numeric(new_train[self.date_col])
 
-        super(OrbitETS, self).fit(df=new_train)
+        super(LGTFull, self).fit(df=new_train)
 
     def predict(self, test, **kwargs):
         new_test = test.copy()
         new_test[self.date_col] = pd.to_numeric(new_test[self.date_col])
 
-        prediction = super(OrbitETS, self).predict(new_test)
+        prediction = super(LGTFull, self).predict(new_test)
 
         prediction[self.date_col] = pd.to_datetime(prediction[self.date_col])
         prediction = prediction[['time', 'prediction']]
