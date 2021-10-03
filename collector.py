@@ -32,7 +32,7 @@ async def get_minute_candles(ticker, start, end):
 
 ticker = 'PIKK'
 start = pd.to_datetime('2020.10.01')
-end = pd.to_datetime('2021.10.01')
+end = pd.to_datetime('2021.10.02')
 
 
 asyncio.run(get_minute_candles(ticker, start, end))
