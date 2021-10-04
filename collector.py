@@ -30,7 +30,7 @@ async def get_minute_candles(ticker, start, end):
         ):
             data.append(candle.to_dict())
 
-ticker = 'PIKK'
+ticker = 'U'
 start = pd.to_datetime('2020.10.01')
 end = pd.to_datetime('2021.10.02')
 
